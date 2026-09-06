@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MathLab | Complete Maths Solver</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--ink:#172033;--muted:#687386;--line:#e5e9f1;--accent:#5b5bd6;--accent2:#7c3aed;--good:#16845b;--bad:#c2414d;--shadow:0 14px 40px rgba(31,41,55,.08)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(135deg,#171a35,#4c3fc7);color:#fff;padding:34px 20px 42px}
+.wrap{max-width:1180px;margin:auto}.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:13px;background:#fff;color:#4c3fc7;display:grid;place-items:center;font-size:23px;font-weight:900}.brand h1{margin:0;font-size:27px}.tag{opacity:.78;font-size:13px}
+.hero{margin-top:34px}.hero h2{font-size:40px;line-height:1.08;margin:0 0 12px;max-width:720px}.hero p{margin:0;color:#d9dcf4;max-width:700px}
+main{max-width:1180px;margin:-22px auto 50px;padding:0 20px}.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow)}
+.workspace{display:grid;grid-template-columns:230px 1fr;overflow:hidden}
+aside{padding:18px;border-right:1px solid var(--line);background:#fafbfe}.cat{width:100%;border:0;background:transparent;text-align:left;padding:12px 13px;border-radius:11px;margin-bottom:5px;color:#536075;cursor:pointer;font-weight:700}.cat:hover{background:#eef0ff}.cat.active{background:#e8e8ff;color:#4844b8}
+.content{padding:26px}.topline{display:flex;justify-content:space-between;gap:15px;align-items:flex-start}.eyebrow{font-size:12px;color:var(--accent);font-weight:900;text-transform:uppercase;letter-spacing:.08em}.topline h3{margin:5px 0 4px;font-size:24px}.muted{color:var(--muted);font-size:14px}.inputbox{margin-top:22px}.inputbox textarea{width:100%;min-height:118px;resize:vertical;border:2px solid var(--line);border-radius:14px;padding:16px;font:inherit;font-size:17px;outline:none}.inputbox textarea:focus{border-color:#7772e8;box-shadow:0 0 0 4px #7772e815}
+.actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}.btn{border:0;border-radius:11px;padding:12px 18px;font-weight:800;cursor:pointer}.primary{background:var(--accent);color:#fff}.secondary{background:#eef0f5;color:#3e485a}.danger{background:#fff0f1;color:var(--bad)}
+.examples{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.chip{border:1px solid var(--line);background:#fff;padding:7px 10px;border-radius:999px;color:#596579;cursor:pointer;font-size:13px}.chip:hover{border-color:#9b98eb;color:#4c48b7}
+.result{margin-top:24px;border-top:1px solid var(--line);padding-top:22px}.answer{background:#f6f5ff;border:1px solid #dfddff;border-radius:15px;padding:18px}.answer .label{font-size:12px;color:#6763b8;font-weight:900;text-transform:uppercase}.answer .value{font-size:30px;font-weight:900;margin-top:5px;overflow-wrap:anywhere}.steps{margin-top:15px}.steps h4{margin:0 0 9px}.step{padding:10px 12px;border-left:3px solid #8581e8;background:#fafaff;margin:7px 0;border-radius:0 8px 8px 0}
+.bottom{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}.card{padding:20px}.card h3{margin-top:0}.history{max-height:330px;overflow:auto}.hist{padding:11px 0;border-bottom:1px solid var(--line);cursor:pointer}.hist:last-child{border:0}.hist b{display:block}.hist small{color:var(--muted)}
+.features{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}.feature{padding:17px}.feature strong{display:block;margin-bottom:5px}.empty{color:var(--muted);padding:20px 0}
+@media(max-width:800px){.workspace{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid var(--line);display:flex;overflow:auto;gap:6px}.cat{white-space:nowrap;width:auto;margin:0}.bottom{grid-template-columns:1fr}.features{grid-template-columns:1fr 1fr}.hero h2{font-size:32px}}
+@media(max-width:500px){.features{grid-template-columns:1fr}.content{padding:19px}.hero h2{font-size:29px}}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+  <div class="brand"><div class="logo">∑</div><div><h1>MathLab</h1><div class="tag">Complete Maths Solver</div></div></div>
+  <div class="hero"><h2>Turn a maths problem into an answer you can understand.</h2><p>Arithmetic, algebra, geometry, trigonometry, statistics, calculus, matrices, sequences, percentages and more.</p></div>
+</div>
+</header>
+
+<main>
+<section class="panel workspace">
+<aside id="categories"></aside>
+<section class="content">
+  <div class="topline">
+    <div><div class="eyebrow" id="eyebrow">Basic Math</div><h3 id="title">Calculate anything basic</h3><div class="muted" id="hint">Try an expression, percentage, fraction or square root.</div></div>
+  </div>
+  <div class="inputbox">
+    <textarea id="problem" placeholder="Example: 25 * 48"></textarea>
+    <div class="actions"><button class="btn primary" id="solve">Solve ✨</button><button class="btn secondary" id="example">Example</button><button class="btn danger" id="clear">Clear</button></div>
+    <div class="examples" id="examples"></div>
+  </div>
+  <div class="result" id="result"><div class="empty">Your solution will appear here.</div></div>
+</section>
+</section>
+
+<section class="features">
+<div class="panel feature"><strong>🧮 Broad coverage</strong><span class="muted">Multiple maths categories in one place.</span></div>
+<div class="panel feature"><strong>🪜 Step-by-step</strong><span class="muted">Show the working instead of only the result.</span></div>
+<div class="panel feature"><strong>📚 History</strong><span class="muted">Keep recent problems in this browser.</span></div>
+<div class="panel feature"><strong>📱 Responsive</strong><span class="muted">Works on desktop and mobile screens.</span></div>
+</section>
+
+<section class="bottom">
+<div class="panel card"><h3>Recent problems</h3><div id="history" class="history"></div></div>
+<div class="panel card"><h3>What this version handles</h3><div class="muted">
+Arithmetic and percentages • Linear equations • Quadratics • Geometry formulas • Trig in degrees • Mean/median/mode • Derivatives and basic integrals • Matrices • Sequences • Factorials • GCD/LCM • Conversions
+</div></div>
+</section>
+</main>
+
+<script>
+const cats=[
+ ['basic','Basic Math','Calculate anything basic','Try an expression, percentage, fraction or square root.',['25 * 48','15% of 840','sqrt(144)','(3/4) + (2/5)']],
+ ['algebra','Algebra','Solve equations and expressions','Linear and quadratic equations with x are supported.',['2*x + 5 = 17','x^2 - 5*x + 6 = 0','3*x - 7 = 11']],
+ ['geometry','Geometry','Calculate shapes','Common 2D shape areas, perimeters and circles.',['area of circle, radius 7','rectangle 12 by 8','triangle base 10 height 6']],
+ ['trig','Trigonometry','Work with angles','sin, cos and tan use degrees.',['sin(30)','cos(60)','tan(45)']],
+ ['stats','Statistics','Understand your data','Mean, median, mode, range and standard deviation.',['mean of 10,20,30,40','median of 4,9,2,7,6','mode of 1,2,2,3,4']],
+ ['calculus','Calculus','Differentiate and integrate','Basic polynomial derivatives and integrals.',['derivative of x^2','derivative of 3*x^3 + 2*x','integral of 6*x^2']],
+ ['matrix','Matrices','Matrix calculations','2×2 addition, multiplication and determinant.',['det [[1,2],[3,4]]','multiply [[1,2],[3,4]] [[5,6],[7,8]]','add [[1,2],[3,4]] [[5,6],[7,8]]']],
+ ['sequence','Sequences','Find patterns','Arithmetic and geometric sequence calculations.',['arithmetic sequence 2,5,8,11, n=10','geometric sequence 3,6,12, n=8']],
+ ['number','Number Theory','Integer tools','Prime check, factors, GCD, LCM and factorial.',['prime 97','factors 84','gcd 48,18','lcm 12,18','factorial 7']],
+ ['conversion','Conversions','Convert common units','Length, temperature and simple time conversions.',['10 km to miles','25 c to f','120 minutes to hours']]
+];
+let current='basic';
+const $=id=>document.getElementById(id);
+function renderCats(){ $('categories').innerHTML=cats.map(c=>`<button class="cat ${c[0]===current?'active':''}" data-cat="${c[0]}">${icon(c[0])} ${c[1]}</button>`).join(''); document.querySelectorAll('.cat').forEach(b=>b.onclick=()=>{current=b.dataset.cat;render();});}
+function icon(c){return {basic:'➗',algebra:'𝑥',geometry:'△',trig:'∠',stats:'📊',calculus:'∫',matrix:'▦',sequence:'🔢',number:'#',conversion:'↔'}[c]||'•'}
+function render(){
+ const c=cats.find(x=>x[0]===current); renderCats(); $('eyebrow').textContent=c[1];$('title').textContent=c[2];$('hint').textContent=c[3];$('examples').innerHTML=c[4].map(x=>`<button class="chip">${x}</button>`).join('');document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{$('problem').value=b.textContent;$('problem').focus()});
+}
+function fmt(n){if(!Number.isFinite(n))return 'Undefined';return Math.abs(n-Math.round(n))<1e-10?String(Math.round(n)):String(Number(n.toFixed(10)));}
+function nums(s){return (s.match(/-?\d*\.?\d+/g)||[]).map(Number);}
+function factorial(n){if(n<0||n>170)return NaN;let r=1;for(let i=2;i<=n;i++)r*=i;return r;}
+function arithmetic(s){
+ let x=s.trim().replace(/,/g,'').replace(/×/g,'*').replace(/÷/g,'/').replace(/√\s*(\d+(?:\.\d+)?)/g,'sqrt($1)');
+ let pct=x.match(/^\s*(-?\d+(?:\.\d+)?)\s*%\s*(?:of|×|\*)\s*(-?\d+(?:\.\d+)?)\s*$/i);
+ if(pct){let a=+pct[1],b=+pct[2],v=a*b/100;return [fmt(v),[`${a}% of ${b}`,`(${a}/100) × ${b}`,`= ${fmt(v)}`]];}
+ if(/^\s*[-+*/().\d\s]+$/.test(x)){try{let v=Function('"use strict";return ('+x+')')();if(typeof v==='number'&&Number.isFinite(v))return [fmt(v),[x,`= ${fmt(v)}`]];}catch{}}
+ let sq=x.match(/^sqrt\((\d+(?:\.\d+)?)\)$/i);if(sq){let n=+sq[1],v=Math.sqrt(n);return [fmt(v),[`√${n}`,`= ${fmt(v)}`]];}
+ return null;
+}
+function algebra(s){
+ let eq=s.replace(/\s+/g,'').replace(/−/g,'-'); if(!eq.includes('='))return null;
+ let [L,R]=eq.split('='); let f=x=>Function('x','return '+L.replace(/\^/g,'**')+'-('+R.replace(/\^/g,'**')+')')(x);
+ let q=nums(L+' '+R);
+ if((L.includes('^')||R.includes('^'))){
+   let a=(L.match(/([-+]?\d*\.?\d*)\*?x\^2/)||[])[1],b=(L.match(/([-+]?\d*\.?\d*)\*?x(?!\^)/)||[])[1];
+   let c=L.replace(/[-+]?\d*\.?\d*\*?x\^2/g,'').replace(/[-+]?\d*\.?\d*\*?x(?!\^)/g,''); 
+   try{let roots=[];for(let x=-100;x<=100;x+=.01){let y=f(x);let y2=f(x+.01);if(y===0||y*y2<0)roots.push(x);}roots=[...new Set(roots.map(x=>fmt(x)))];if(roots.length)return [roots.join(', '),[`Equation: ${s}`,'Find x where left side = right side',`Solutions ≈ ${roots.join(', ')}`]];}catch{}
+ }
+ let m=f(0), one=f(1)-m; if(Math.abs(one)>1e-12){let x=-m/one;return [fmt(x),[`Equation: ${s}`,'Move constants to one side and x terms to the other',`x = ${fmt(x)}`]];}
+ return ['No unique solution',['The equation does not have one unique x value.']];
+}
+function geometry(s){
+ let a=s.toLowerCase(),n=nums(a);
+ if(a.includes('circle')){let r=(a.match(/radius\s*(-?\d*\.?\d+)/)||[])[1]||n[0];if(r){r=+r;let area=Math.PI*r*r,p=2*Math.PI*r;return [`Area = ${fmt(area)}, Circumference = ${fmt(p)}`,[`Radius = ${r}`,'Area = πr²',`Area = ${fmt(area)}`,'Circumference = 2πr',`Circumference = ${fmt(p)}`]]}}
+ if(a.includes('rectangle')&&n.length>=2){let [w,h]=n,ar=w*h,p=2*(w+h);return [`Area = ${fmt(ar)}, Perimeter = ${fmt(p)}`,[`Width = ${w}`,`Height = ${h}`,`Area = ${w} × ${h} = ${fmt(ar)}`,`Perimeter = 2(${w}+${h}) = ${fmt(p)}`]]}
+ if(a.includes('triangle')&&n.length>=2){let [b,h]=n,ar=b*h/2;return [`Area = ${fmt(ar)}`,[`Base = ${b}`,`Height = ${h}`,'Area = ½ × base × height',`= ${fmt(ar)}`]]}
+ return null;
+}
+function trig(s){let m=s.toLowerCase().match(/(sin|cos|tan)\s*\(\s*(-?\d+(?:\.\d+)?)\s*\)/);if(!m)return null;let fn=m[1],d=+m[2],r=d*Math.PI/180,v=fn==='sin'?Math.sin(r):fn==='cos'?Math.cos(r):Math.tan(r);if(Math.abs(v)<1e-12)v=0;return [fmt(v),[`${fn}(${d}°)`,`Convert degrees to radians: ${fmt(r)}`,`${fn}(${d}°) = ${fmt(v)}`]]}
+function stats(s){
+ let a=s.toLowerCase(),n=nums(a);if(!n.length)return null;let sorted=[...n].sort((x,y)=>x-y),sum=n.reduce((x,y)=>x+y,0),mean=sum/n.length;
+ if(a.includes('mean'))return [fmt(mean),[`Data: ${n.join(', ')}`,`Sum = ${fmt(sum)}`,`Count = ${n.length}`,`Mean = ${fmt(sum)}/${n.length} = ${fmt(mean)}`]];
+ if(a.includes('median')){let m=sorted.length%2?sorted[(sorted.length-1)/2]:(sorted[sorted.length/2-1]+sorted[sorted.length/2])/2;return [fmt(m),[`Sorted: ${sorted.join(', ')}`,`Median = ${fmt(m)}`]]}
+ if(a.includes('mode')){let map={};n.forEach(x=>map[x]=(map[x]||0)+1);let mx=Math.max(...Object.values(map)),modes=Object.keys(map).filter(k=>map[k]===mx);return [modes.join(', '),[`Most frequent count = ${mx}`,`Mode = ${modes.join(', ')}`]]}
+ if(a.includes('range'))return [fmt(Math.max(...n)-Math.min(...n)),[`Maximum = ${Math.max(...n)}`,`Minimum = ${Math.min(...n)}`,`Range = max − min = ${fmt(Math.max(...n)-Math.min(...n))}`]];
+ return null;
+}
+function calculus(s){
+ let a=s.toLowerCase(),m=a.match(/(derivative|differentiate)\s+(?:of\s+)?(.+)/);let integ=a.match(/(integral|integrate)\s+(?:of\s+)?(.+)/);let expr=(m||integ)?.[2];if(!expr)return null;
+ expr=expr.replace(/\^/g,'**').replace(/\s/g,'');let terms=expr.match(/[+-]?[^+-]+/g)||[];let out=[];
+ for(let t of terms){let mm=t.match(/^([+-]?\d*\.?\d*)\*?x(?:\*\*(\d+))?$/);if(mm){let c=mm[1]===''||mm[1]==='+'?1:mm[1]==='-'?-1:+mm[1],p=mm[2]?+mm[2]:1;if(m)out.push(`${fmt(c*p)}*x^${p-1}`);else out.push(`${fmt(c/(p+1))}*x^${p+1}`)}else{let c=Number(t);if(!Number.isNaN(c)&&!m)out.push(`${fmt(c)}*x`)}}
+ if(!out.length)return null;let ans=out.join(' + ').replace(/\+\s-\s/g,'- ');return [ans,[`${m?'Derivative':'Integral'} of ${expr}`,m?'Apply d/dx(x^n) = n·x^(n−1)':'Apply ∫x^n dx = x^(n+1)/(n+1)',`Result = ${ans}`]]}
+function parseMat(x){let m=x.match(/\[\[([^\]]+)\],\[([^\]]+)\]\]/);if(!m)return null;return [m[1].split(',').map(Number),m[2].split(',').map(Number)]}
+function matrix(s){
+ let a=s.toLowerCase(),ms=s.match(/\[\[[^\]]+\],\[[^\]]+\]\]/g);if(a.includes('det')){let M=parseMat(ms?.[0]||'');if(!M)return null;let v=M[0][0]*M[1][1]-M[0][1]*M[1][0];return [fmt(v),[`det([[a,b],[c,d]]) = ad − bc`,`= ${M[0][0]}×${M[1][1]} − ${M[0][1]}×${M[1][0]}`,`= ${fmt(v)}`]]}
+ if(ms?.length>=2){let A=parseMat(ms[0]),B=parseMat(ms[1]);if(a.includes('add')){let C=A.map((r,i)=>r.map((v,j)=>v+B[i][j]));return [JSON.stringify(C),['Add corresponding entries',JSON.stringify(C)]]}if(a.includes('multiply')){let C=[[A[0][0]*B[0][0]+A[0][1]*B[1][0],A[0][0]*B[0][1]+A[0][1]*B[1][1]],[A[1][0]*B[0][0]+A[1][1]*B[1][0],A[1][0]*B[0][1]+A[1][1]*B[1][1]]];return [JSON.stringify(C),['Multiply rows by columns',JSON.stringify(C)]]}}
+ return null;
+}
+function sequence(s){
+ let a=s.toLowerCase(),n=nums(a);if(!n.length)return null;let isG=a.includes('geometric'),k=(a.match(/n\s*=\s*(\d+)/)||[])[1];if(!k)return null;k=+k;
+ if(isG){let r=n[1]/n[0],v=n[0]*Math.pow(r,k-1);return [fmt(v),[`First term = ${n[0]}`,`Common ratio = ${fmt(r)}`,`aₙ = a₁r^(n−1)`,`a_${k} = ${fmt(v)}`]]}
+ if(n.length>=2){let d=n[1]-n[0],v=n[0]+(k-1)*d;return [fmt(v),[`First term = ${n[0]}`,`Common difference = ${fmt(d)}`,`aₙ = a₁ + (n−1)d`,`a_${k} = ${fmt(v)}`]]}return null;
+}
+function numberTheory(s){
+ let a=s.toLowerCase(),n=nums(a).map(x=>Math.trunc(x));if(!n.length)return null;
+ if(a.includes('factorial')){let v=factorial(n[0]);return [fmt(v),[`${n[0]}!`,Array.from({length:n[0]},(_,i)=>n[0]-i).join(' × '),`= ${fmt(v)}`]]}
+ if(a.includes('prime')){let p=n[0],yes=p>1;for(let i=2;i*i<=p;i++)if(p%i===0)yes=false;return [yes?'Prime':'Not prime',[`${p} has ${yes?'no divisors other than 1 and itself':'a divisor other than 1 and itself'}.`]]}
+ if(a.includes('factor')){let x=Math.abs(n[0]),f=[];for(let i=1;i<=x;i++)if(x%i===0)f.push(i);return [f.join(', '),[`Factors of ${x}: ${f.join(', ')}`]]}
+ const gcd=(x,y)=>y?gcd(y,x%y):Math.abs(x);if(a.includes('gcd')&&n.length>=2){let g=gcd(n[0],n[1]);return [String(g),[`gcd(${n[0]}, ${n[1]}) = ${g}`]]}if(a.includes('lcm')&&n.length>=2){let g=gcd(n[0],n[1]),v=Math.abs(n[0]*n[1])/g;return [String(v),[`lcm = |a×b|/gcd`,`= ${v}`]]}return null;
+}
+function conversion(s){
+ let a=s.toLowerCase(),n=nums(a);if(!n.length)return null;let v=n[0];
+ if(a.includes('km')&&a.includes('mile')){let x=v*.621371;return [fmt(x)+' miles',[`${v} km × 0.621371`,`= ${fmt(x)} miles`]]}
+ if((a.includes('c to f')||a.includes('celsius'))){let x=v*9/5+32;return [fmt(x)+' °F',[`${v}°C × 9/5 + 32`,`= ${fmt(x)}°F`]]}
+ if((a.includes('f to c')||a.includes('fahrenheit'))){let x=(v-32)*5/9;return [fmt(x)+' °C',[`(${v} − 32) × 5/9`,`= ${fmt(x)}°C`]]}
+ if(a.includes('minute')&&a.includes('hour')){let x=v/60;return [fmt(x)+' hours',[`${v} ÷ 60`,`= ${fmt(x)} hours`]]}
+ if(a.includes('hour')&&a.includes('minute')){let x=v*60;return [fmt(x)+' minutes',[`${v} × 60`,`= ${fmt(x)} minutes`]]}
+ if(a.includes('m')&&a.includes('feet')){let x=v*3.28084;return [fmt(x)+' feet',[`${v} m × 3.28084`,`= ${fmt(x)} feet`]]}
+ return null;
+}
+function solve(p){
+ let fn={basic:arithmetic,algebra,geometry,trig,stats,calculus,matrix,sequence,number:numberTheory,conversion}[current];
+ return fn?.(p)||arithmetic(p)||algebra(p)||geometry(p)||trig(p)||stats(p)||calculus(p)||matrix(p)||sequence(p)||numberTheory(p)||conversion(p);
+}
+function show(res,p){
+ if(!res){$('result').innerHTML=`<div class="answer"><div class="label">Could not solve</div><div class="value" style="font-size:22px">I don't understand that format yet.</div><div class="muted" style="margin-top:8px">Try one of the examples for this category.</div></div>`;return}
+ let [answer,steps]=res;$('result').innerHTML=`<div class="answer"><div class="label">Answer</div><div class="value">${answer}</div></div><div class="steps"><h4>Working</h4>${steps.map((x,i)=>`<div class="step"><b>${i+1}.</b> ${x}</div>`).join('')}</div>`;
+ save(p,answer);
+}
+function save(p,a){let h=JSON.parse(localStorage.getItem('mathlab-history')||'[]');h.unshift({p,a,c:current,t:Date.now()});h=h.slice(0,25);localStorage.setItem('mathlab-history',JSON.stringify(h));renderHistory();}
+function renderHistory(){let h=JSON.parse(localStorage.getItem('mathlab-history')||'[]');$('history').innerHTML=h.length?h.map((x,i)=>`<div class="hist" data-i="${i}"><b>${escapeHtml(x.p)}</b><small>${escapeHtml(x.a)} · ${cats.find(c=>c[0]===x.c)?.[1]||x.c}</small></div>`).join(''):'<div class="empty">No solved problems yet.</div>';document.querySelectorAll('.hist').forEach(e=>e.onclick=()=>{let h=JSON.parse(localStorage.getItem('mathlab-history')||'[]');let x=h[+e.dataset.i];current=x.c;render();$('problem').value=x.p;show(solve(x.p),x.p);});}
+function escapeHtml(x){return x.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
+$('solve').onclick=()=>{let p=$('problem').value.trim();if(!p){$('result').innerHTML='<div class="empty">Enter a problem first.</div>';return}show(solve(p),p);}
+$('example').onclick=()=>{let c=cats.find(x=>x[0]===current);$('problem').value=c[4][Math.floor(Math.random()*c[4].length)];}
+$('clear').onclick=()=>{$('problem').value='';$('result').innerHTML='<div class="empty">Your solution will appear here.</div>';};
+$('problem').addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter')$('solve').click()});
+render();renderHistory();
+</script>
+</body>
+</html>

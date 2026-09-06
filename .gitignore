@@ -1,0 +1,18 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor folders
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Python environments if a backend is added later
+.venv/
+venv/
+__pycache__/
+*.pyc
